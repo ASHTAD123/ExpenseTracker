@@ -61,7 +61,7 @@ const Register = () => {
                     onChange={(e) => handleChange(e)}
                   />
                 </div>        
-                {/* <FormFieldError message={error.response.data.username}/> */}
+                <FormFieldError message={error.response.data.username}/>
 
                 <div className="mb-3">
                   <label htmlFor="password">Password</label>
