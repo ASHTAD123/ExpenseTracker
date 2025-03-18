@@ -36,8 +36,7 @@ const Register = () => {
       })
       .catch(function (error) {
         if (error.response) {
-          // setError(getResponseError(error));
-          setError((error));
+          setError(getResponseError(error));
           console.log("ERROR : ");
           console.log(error.response.data.username);
         }
