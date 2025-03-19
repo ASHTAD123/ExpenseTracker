@@ -1,12 +1,13 @@
 import React from "react";
 import { useState } from "react";
 import FormFieldError from "./FormFieldError";
-import { getResponseError } from "./errorUtils";
-import axios from "axios";
+import registerUser from "../Services/RegistrationService";
 
 const Register = () => {
-  const [error, setError] = useState("");
-  const API_REGISTER_USER_URL = "http://localhost:8080/expenseTracker/register";
+  const [errorUsername, setUsernameError] = useState("");
+  const [errorPassword, setPasswordError] = useState("");
+  const [errorEmail, setEmailError] = useState("");
+  const [errorFullName, setFullNameError] = useState("");
 
   const [registrationDetails, setRegistrationDetails] = useState({
     username: "",
@@ -17,7 +18,7 @@ const Register = () => {
 
   const handleChange = (e) => {
     const value = e.target.value;
-    setError("");
+    setUsernameError("");
     setRegistrationDetails((registrationDetails) => ({
       ...registrationDetails,
       [e.target.name]: value,
@@ -27,20 +28,47 @@ const Register = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    axios
-      .post(API_REGISTER_USER_URL, registrationDetails, {
-        headers: {
-          Authorization: "Bearer your-token",
-          "Content-Type": "application/json",
-        },
-      })
-      .catch(function (error) {
-        if (error.response) {
-          setError(getResponseError(error));
-          console.log("ERROR : ");
-          console.log(error.response.data.username);
-        }
-      });
+    try {
+      const response = registerUser(registrationDetails);
+
+      response
+        .then((response) => {
+       
+          if (response.status === 200 || response.status === 202) {
+            console.log(" Status: ", response.status);
+            alert("Registration Successful");
+            console.log("Registration Successful");
+          }
+        })
+        .catch((error2) => {
+          if (
+            error2.response.status === 400 ||
+            error2.response.status === 500
+          ) {
+            console.log(" Status: ", error2.response.status);
+            console.error("Registration failed:");
+            alert("Registration failed");
+
+            if (
+              error2.response.data ===
+              "User Already exists with this email ,pls try different email"
+            ) {
+              console.log(error2.response.data);
+              alert(error2.response.data);
+            }
+
+            console.log(" ERROR");
+            console.log(error2);
+
+            setUsernameError(error2.response.data.username);
+            setPasswordError(error2.response.data.password);
+            setEmailError(error2.response.data.email);
+            setFullNameError(error2.response.data.fullName);
+          }
+        });
+    } catch (error) {
+      console.error("Registration failed:", error);
+    }
   };
 
   return (
@@ -60,8 +88,8 @@ const Register = () => {
                     placeholder="username"
                     onChange={(e) => handleChange(e)}
                   />
-                </div>        
-                <FormFieldError message={error.response.data.username}/>
+                </div>
+                <FormFieldError message={errorUsername} />
 
                 <div className="mb-3">
                   <label htmlFor="password">Password</label>
@@ -73,7 +101,7 @@ const Register = () => {
                     onChange={(e) => handleChange(e)}
                   />
                 </div>
-
+                <FormFieldError message={errorPassword} />
                 <div className="mb-3">
                   <label htmlFor="email">Email</label>
                   <input
@@ -84,7 +112,7 @@ const Register = () => {
                     onChange={(e) => handleChange(e)}
                   />
                 </div>
-
+                <FormFieldError message={errorEmail} />
                 <div className="mb-3">
                   <label htmlFor="fullName">Full Name</label>
                   <br></br>
@@ -96,7 +124,7 @@ const Register = () => {
                     onChange={(e) => handleChange(e)}
                   ></input>
                 </div>
-
+                <FormFieldError message={errorFullName} />
                 <button
                   type="submit"
                   className="btn btn-primary w-100"
@@ -114,4 +142,3 @@ const Register = () => {
 };
 
 export default Register;
- 
