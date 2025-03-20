@@ -35,16 +35,16 @@ const Login = () => {
         .then((response) => {
           if (response.status === 200 || response.status === 202) {
             localStorage.setItem("login", true);
-            navigate("/home");
+            navigate("/expenseTracker/home");
             console.log(" Status: ", response.status);
-            //  alert("Login Successful");
+              alert("Login Successful");
             console.log("Login Successful");
 
             useEffect(() => {
               let login = localStorage.getItem("login");
 
               if (login) {
-                navigate("/home");
+                navigate("/expenseTracker/home");
               }
             });
 

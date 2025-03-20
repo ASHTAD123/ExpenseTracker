@@ -20,16 +20,20 @@ function App() {
    <Navigationbar> </Navigationbar>
 
    <Routes>
-      <Route path='/home' element={<Protected Component={Home} />}></Route>
+      {/* <Route path='/home' element={<Protected Component={Home} />}></Route> */}
      
+      <Route path='/expenseTracker/home' element={<Home/>}></Route>
+      
       <Route path='/expenseTracker/register' element={<Register/>}></Route>
      
      <Route path='/expenseTracker/login' element={<Login/>}></Route>
 
      <Route path='/expenseTracker/logout' element={<Logout/>}></Route>
 
-      <Route path='/expenseTracker/expenses' element={<Protected Component={GetExpense}/>}></Route>
-
+      {/* <Route path='/expenseTracker/expenses' element={<Protected Component={GetExpense}/>}></Route> */}
+     
+      <Route path='/expenseTracker/expenses' element={<GetExpense/>}></Route>
+     
       <Route path='/expenseTracker/addExpense' element={<Protected Component={AddExpense} />} ></Route>
 
       <Route path='/expenseTracker/updateExpense' element={<Protected Component ={UpdateExpense} />} ></Route>

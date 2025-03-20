@@ -7,6 +7,7 @@ export const registerUser = async (registrationDetails) => {
     return await axios.post(API_REGISTER_USER_URL, registrationDetails, {
       headers: {
         "Content-Type": "application/json",
+        withCredentials: true,// Important: Ensures cookies are sent with the request
       },
     });
  

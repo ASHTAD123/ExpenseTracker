@@ -6,9 +6,7 @@ export const loginUser = async(loginDetails)=>{
 
     try{
         return await axios.post(API_LOGIN_USER_URL,loginDetails,{
-            headers:{
-                "Content-Type":"application/json",
-            },
+                withCredentials: true,
         });
     }catch(error){
         return await Promise.reject(error);
