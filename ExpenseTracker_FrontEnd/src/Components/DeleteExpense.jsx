@@ -1,9 +1,16 @@
-import React from 'react'
+import axios from "axios";
+import deleteExpenseService from "../Services/DeleteService";
 
-const DeleteExpense = () => {
-  return (
-    <div>DeleteExpense</div>
-  )
-}
+const deleteUserExpense = (id) => {
 
-export default DeleteExpense
+    deleteExpenseService(id).then((res)=>{
+
+      console.log("Expense Deleted Successfully");
+      
+    }).catch((error)=>{
+      console.log(error);
+      
+    })
+  }
+
+export default deleteUserExpense;

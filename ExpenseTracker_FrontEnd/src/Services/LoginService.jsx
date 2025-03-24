@@ -1,12 +1,12 @@
 import axios from "axios";
 
-const API_LOGIN_USER_URL = "http://localhost:8080/expenseTracker/login";
+const API_LOGIN_USER_URL = '/expenseTracker/login';
 
 export const loginUser = async(loginDetails)=>{
 
     try{
         return await axios.post(API_LOGIN_USER_URL,loginDetails,{
-                withCredentials: true,
+               "Content-Type": "application/json" // Make sure you're sending JSON
         });
     }catch(error){
         return await Promise.reject(error);

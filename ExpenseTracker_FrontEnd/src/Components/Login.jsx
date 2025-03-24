@@ -1,71 +1,99 @@
 import React from "react";
 import { useState } from "react";
-import FormFieldError from "./FormFieldError";
 import loginUser from "../Services/LoginService";
 import { useNavigate } from "react-router";
-import { useEffect } from "react";
+import Form from "react-bootstrap/Form";
+import Button from "react-bootstrap/Button";
+import Container from "react-bootstrap/Container";
+import {Nav} from "react-bootstrap";
+import backgroundImage from "../assets/bg.jpg"
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
+
+const notify = (message) => toast(message);
 
 const Login = () => {
-  const [errorEmail, setEmailError] = useState("");
-  const [errorPassword, setPasswordError] = useState("");
+
+  const [emailError, setEmailError] = useState("");
+  const [passwordError, setPasswordError] = useState("");
+  const [successMsg, setSuccessMsg] = useState("");
+  const [failureMsg, setFailureMsg] = useState("");
   const navigate = useNavigate();
+  const [validated, setValidated] = useState(false);
+  // const { addToast } = useToast();
+
 
   const [loginDetails, setLoginDetails] = useState({
     email: "",
     password: "",
   });
 
+  
+
   const handleChange = (e) => {
+    handleReset();
     const value = e.target.value;
-    setPasswordError("");
-    setEmailError("");
     setLoginDetails((loginDetails) => ({
       ...loginDetails,
       [e.target.name]: value,
     }));
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
+  const handleReset = () => {
+    setEmailError("");
+    setPasswordError("");
+    setSuccessMsg("")
+    setFailureMsg("")
+  }
+ 
+  const handleSubmit = (event) => {
+    const form = event.currentTarget;
+    if (form.checkValidity() === false) {
+      event.preventDefault();
+      event.stopPropagation();
+    }
+    setValidated(true);
 
     try {
       const response = loginUser(loginDetails);
 
       response
         .then((response) => {
+          let successMsg = "Login Success 😁"
+      
           if (response.status === 200 || response.status === 202) {
-            localStorage.setItem("login", true);
-            navigate("/expenseTracker/home");
-            console.log(" Status: ", response.status);
-              alert("Login Successful");
-            console.log("Login Successful");
+           
+            window.localStorage.setItem("loggedIn", true);
+            console.log(" Status: ", response.status);     
+            console.log(successMsg);
+           
+            notify(successMsg);
 
-            useEffect(() => {
-              let login = localStorage.getItem("login");
-
-              if (login) {
-                navigate("/expenseTracker/home");
-              }
-            });
-
-            // navigate('/home');
+            //2secs
+            setTimeout(() => {
+              navigate("/");  
+            },1000 );
           }
+          const isLoggedIn = window.localStorage.getItem("loggedIn");
+//          console.log("IS LOGGED IN AFTER LOGIN : " + isLoggedIn);
         })
         .catch((error) => {
+          
           if (error.status === 400 || error.status === 500) {
+            
+          let errLoginMsg = "Login failed ☹️ "
             console.log(" Status: ", error.response.status);
             console.error("Login failed");
-            alert("Login failed");
+            notify(errLoginMsg);
 
-            if (
-              error.response.data ===
-              "User Already exists with this email ,pls try different email"
-            ) {
-              console.log(error.response.data);
-              alert(error.response.data);
+            if (error.response.data ==="User Already exists with this email ,pls try different email") {
+              console.log(error.response.data.email);
+              setEmailError(error.response.data.email);
             }
-            console.log(" ERROR");
+            console.log("ERROR");
             console.log(error);
+
             setEmailError(error.response.data.email);
             setPasswordError(error.response.data.password);
           }
@@ -76,50 +104,76 @@ const Login = () => {
   };
 
   return (
-    <div className="container mt-3">
-      <div className="row">
-        <div className="">
-          <div className="card">
-            <div className="card-header fs-5 text-center">Login</div>
-            <div className="card-body">
-              <form>
-                <div className="mb-3">
-                  <label htmlFor="email">Email</label>
-                  <input
-                    type="email"
-                    name="email"
-                    className="form-control"
-                    placeholder="Enter your Email here"
-                    onChange={(e) => handleChange(e)}
-                  />
-                </div>
-                <FormFieldError message={errorEmail} />
+<div
+      style={{
+        backgroundImage: `url(${backgroundImage})`,
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+        backgroundRepeat: "no-repeat",
+        backgroundAttachment: "fixed",
+        width: "100vw",
+        height: "100vh",
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        position: "absolute", // Ensure full coverage
+        left: 0,
+        top: 0,
+      }}
+    >
+      <Container
+        className="p-4 rounded"
+        style={{    
+          maxWidth: "400px",
+          width: "90%",
+        }} // Ensures responsiveness
+      >
+        <Form className="bg-white p-4 rounded" >
+        
+          <h2 className="text-center fs-3 mb-4 text-success">Login</h2>
 
-                <div className="mb-3">
-                  <label htmlFor="password">Password</label>
-                  <input
-                    type="password"
-                    name="password"
-                    className="form-control"
-                    placeholder="Enter your Password here"
-                    onChange={(e) => handleChange(e)}
-                  />
-                </div>
-                <FormFieldError message={errorPassword} />
+          {successMsg && <div className="text-center text-success">{successMsg}</div>}
+          {failureMsg && <div className="text-center text-danger">{failureMsg}</div>}
 
-                <button
-                  type="submit"
-                  className="btn btn-primary w-100"
-                  onClick={handleSubmit}
-                >
-                  Submit
-                </button>
-              </form>
+          <Form.Group className="mb-3" controlId="email">
+            <Form.Label className="fs-6 text-start d-block mb-2">Email</Form.Label>
+            <Form.Control
+              type="email"
+              placeholder="Enter Email"
+              className="fs-6"
+              name="email"
+              onChange={(e) => handleChange(e)}
+            />
+          </Form.Group>
+          {emailError && <div className="text-start text-danger">{emailError}</div>}
+
+          <Form.Group className="mb-3" controlId="password">
+            <Form.Label className="fs-6 text-start d-block">Password</Form.Label>
+            <Form.Control
+              type="password"
+              name="password"
+              placeholder="Enter Password"
+              className="fs-6"
+              onChange={(e) => handleChange(e)}
+            />
+          </Form.Group>
+          {passwordError && <div className="text-start text-danger">{passwordError}</div>}
+
+          <div className="text-center mt-4">
+            <div className="d-flex justify-content-center gap-3">
+              <Button className="fs-6" variant="success" onClick={handleSubmit}>Login</Button>
+              <ToastContainer />
+              <Button className="fs-6" variant="danger" type="reset" >Reset</Button>
+
+            </div>
+            <div className="mt-3">
+              <Nav.Link href="register" className="text-primary text-decoration-none">New User?</Nav.Link>
             </div>
           </div>
-        </div>
-      </div>
+        </Form>
+      </Container>
     </div>
+   
   );
 };
 
