@@ -11,6 +11,7 @@ import Register from "./Components/Register";
 import Login from "./Components/Login";
 import ProtectedRoute from "./Components/ProtectedRoute";
 import Logout from "./Components/Logout";
+import SearchExpense from "./Components/SearchExpense"
 
 function App() {
 
@@ -21,8 +22,7 @@ function App() {
       <Navigationbar> </Navigationbar>
       <Routes>
         {/* Unauthorized Routes is logged out */}
-       
-        
+             
         
         {!isLoggedIn ? (
           <>
@@ -33,10 +33,11 @@ function App() {
         ) : (
           <>
             <Route path="/logout" element={<Logout />} />
+            <Route path="/search" element={<SearchExpense/>}></Route>
           </>
         )}
 
-        <Route path="/logout" element={<Logout />}></Route>
+        {/* <Route path="/logout" element={<Logout />}></Route> */}
 
         {/* Protected Routes when user is logged in*/}
         <Route element={<ProtectedRoute />}>

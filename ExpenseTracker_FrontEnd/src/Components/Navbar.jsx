@@ -31,8 +31,10 @@ const Navigationbar = () => {
             <Nav className="mr-auto">
               <Nav.Link as={Link} to="/" className="text-white">Home</Nav.Link>
               <Nav.Link as={Link} to="/addExpense" className="text-white">Add Expense</Nav.Link>
+              <Nav.Link as={Link} to="/search/" className="text-white">Search</Nav.Link>
               <Nav.Link as={Link} to="/about" className="text-white">About</Nav.Link>
               <Nav.Link as={Link} to="/logout" className="text-white">Logout</Nav.Link>
+   
             </Nav>
           )
         }

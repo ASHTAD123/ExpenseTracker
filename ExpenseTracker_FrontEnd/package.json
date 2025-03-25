@@ -11,9 +11,10 @@
   },
   "dependencies": {
     "@react-aria/toast": "^3.0.1",
-    "axios": "^1.8.3",
+    "axios": "^1.8.4",
     "bootstrap": "^5.3.3",
     "http-proxy-middleware": "^3.0.3",
+    "lodash.debounce": "^4.0.8",
     "react": "^19.0.0",
     "react-bootstrap": "^2.10.9",
     "react-dom": "^19.0.0",
