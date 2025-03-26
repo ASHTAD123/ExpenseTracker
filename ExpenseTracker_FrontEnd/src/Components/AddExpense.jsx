@@ -39,53 +39,54 @@ const AddExpense = () => {
   };
 
   const handleSubmit = (event) => {
+   
     const form = event.currentTarget;
+   
     if (form.checkValidity() === false) {
       event.preventDefault();
       event.stopPropagation();
     }
     setValidated(true);
-  
 
-try{
-  const response = addExpense(expenseDetails);
- 
-  response
- 
-  .then((response) => {
-   
-    if (response.status === 200 || response.status === 202) {
-      let successMsg = "Expense Added Successfully";
+      try{
+        const response = addExpense(expenseDetails);
+      
+        response
+      
+        .then((response) => {
+        
+          if (response.status === 200 || response.status === 202) {
+            let successMsg = "Expense Added Successfully";
 
-      console.log(" Status: ", response.status);
-      setSuccessMsg(successMsg)
-      console.log(successMsg);
-      handleReset();
-    }
-  })
-  .catch((error) => {
-    
-    if (error.status === 400 || error.status === 500) {
-      let failureMsg = "Failed to add expense :( , Pls check your filled details";
-      console.log(" Status: ", error.response.status);
-      console.error(failureMsg);
-      setFailureMsg(failureMsg)
+            console.log(" Status: ", response.status);
+            setSuccessMsg(successMsg)
+            console.log(successMsg);
+            handleReset();
+          }
+        })
+        .catch((error) => {
+          
+          if (error.status === 400 || error.status === 500) {
+            let failureMsg = "Failed to add expense :( , Pls check your filled details";
+            console.log(" Status: ", error.response.status);
+            console.error(failureMsg);
+            setFailureMsg(failureMsg)
 
-      if ( error.response.data ==="Unable to add expense, Pls try logging in again"){
-        console.log(error.response.data);
-        alert("Unable to add expense, Pls try logging in again");
+            if ( error.response.data ==="Unable to add expense, Pls try logging in again"){
+              console.log(error.response.data);
+              alert("Unable to add expense, Pls try logging in again");
+            }
+            console.log(" ERROR");
+            console.log(error);
+            setExpenseNameError(error.response.data.expenseName);
+            setAmountError(error.response.data.amount);
+            setDateError(error.response.data.date);
+            setDescriptionError(error.response.data.description);
+          }
+        });
+      }catch (error) {
+        console.error("Failed to add Expenses", error);
       }
-      console.log(" ERROR");
-      console.log(error);
-      setExpenseNameError(error.response.data.expenseName);
-      setAmountError(error.response.data.amount);
-      setDateError(error.response.data.date);
-      setDescriptionError(error.response.data.description);
-    }
-  });
-}catch (error) {
-  console.error("Failed to add Expenses", error);
-}
 }
   return (
     <div
@@ -105,7 +106,7 @@ try{
         top: 0,
       }}
     >
-         <Container
+      <Container
         className="p-4 rounded"
         style={{ 
           maxWidth: "400px",
@@ -160,9 +161,8 @@ try{
             type="date"
             id="start"
             name="date"
-            value="2018-07-22"
             min="2018-01-01"
-            max="2018-12-31"
+            max="2099-1-31"
             onChange={(e) => handleChange(e)}
           />
         </Form.Group>

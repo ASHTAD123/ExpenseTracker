@@ -4,10 +4,11 @@ import getExpenses from "../Services/GetExpensesService";
 import { Link } from "react-router";
 import deleteUserExpense from "../Services/DeleteService";
 import backgroundImage from "../assets/bg.jpg";
-
+import Form from "react-bootstrap/Form";
 import fetchResults from "../Services/SearchExpenseService";
 
 const SearchExpense = () => {
+  
   const [query, setQueryParam] = useState("");
   const [results, setQueryResults] = useState([]);
   const [expenses, setExpenses] = useState([]);
@@ -25,13 +26,9 @@ const SearchExpense = () => {
   }, []);
 
   const handleInputChange = async (e) => {
-    const value = e.target.value;
-    setQueryParam(value);
 
-    // if (!value.trim()) {
-    //   setQueryResults([]); // Clear results if input is empty
-    //   return;
-    // }
+    let value = e.target.value;
+    setQueryParam(value);
 
     try {
       console.log("Searching for:", value);
@@ -63,22 +60,34 @@ const SearchExpense = () => {
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
-        position: "absolute", // Ensure full coverage
+        position: "absolute", 
         left: 0,
         top: 0,
       }}
     >
       <div>
-        <input
-          type="text"
-          placeholder="Search..."
-          value={query}
-          onChange={handleInputChange} 
-        />
-      
+        
+       <div className="container mt-3">
+        
+        <div className="row">
+          
+          <div className="col-md-12">
+            <div className="card">
+              <div className="fs-3 text-center">All Expenses</div>
+              <div className="card-body"></div>
+              <Form.Group className="mb-3" >
+       
+          <Form.Control
+               type="text"
+               placeholder="Search"
+               value={query}
+               onChange={handleInputChange} 
+          />
+        </Form.Group>
         <Table responsive="sm">
+          
           <thead>
-            <tr>
+            <tr >
               <th>Sr No</th>
               <th>Date</th>
               <th>Expense Name</th>
@@ -88,10 +97,13 @@ const SearchExpense = () => {
             </tr>
           </thead>
           <tbody>
-            {results.length > 0
-              ? results.map((expenses, index) => (
-                  <tr>
-                    <td>{index + 1}</td>
+            {
+            results.length > 0
+             
+            ? results.map((expenses,index) => (
+                 
+                 <tr key={expenses.expenseId}>
+                   <td>{index+1}</td>
                     <td>{expenses.date}</td>
                     <td>{expenses.expenseName}</td>
                     <td>{expenses.description}</td>
@@ -114,7 +126,7 @@ const SearchExpense = () => {
                   </tr>
                 ))
               : expenses.map((expenses, index) => (
-                  <tr>
+                  <tr key={expenses.expenseId}>
                     <td>{index + 1}</td>
                     <td>{expenses.date}</td>
                     <td>{expenses.expenseName}</td>
@@ -139,6 +151,10 @@ const SearchExpense = () => {
                 ))}
           </tbody>
         </Table>
+        </div>
+          </div>
+        </div>
+      </div>
       </div>
     </div>
   );

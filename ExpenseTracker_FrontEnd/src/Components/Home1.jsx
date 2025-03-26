@@ -47,7 +47,7 @@ const Home = () => {
         <div className="row">
           
           <div className="col-md-12">
-            <div className="card"><SearchExpense/>
+            <div className="card">
               <div className="card-header fs-3 text-center">All Expenses</div>
               <div className="card-body"></div>
 
