@@ -1,5 +1,7 @@
 import React from 'react'
 import backgroundImage from "../assets/bg.jpg";
+import Navigationbar from "../Components/Navbar";
+
 
 const About = () => {
   return (
@@ -21,6 +23,7 @@ const About = () => {
     }}
     >
 
+<Navigationbar/>
     </div>
   )
 }

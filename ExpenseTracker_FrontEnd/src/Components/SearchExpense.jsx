@@ -6,6 +6,7 @@ import deleteUserExpense from "../Services/DeleteService";
 import backgroundImage from "../assets/bg.jpg";
 import Form from "react-bootstrap/Form";
 import fetchResults from "../Services/SearchExpenseService";
+import Navigationbar from "../Components/Navbar";
 
 const SearchExpense = () => {
   
@@ -65,6 +66,8 @@ const SearchExpense = () => {
         top: 0,
       }}
     >
+      
+      <Navigationbar/>
       <div>
         
        <div className="container mt-3">

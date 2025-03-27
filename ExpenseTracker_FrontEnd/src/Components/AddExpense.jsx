@@ -5,6 +5,7 @@ import backgroundImage from "../assets/bg.jpg";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import Container from "react-bootstrap/Container";
+import Navigationbar from "../Components/Navbar";
 
 const AddExpense = () => {
 
@@ -106,6 +107,8 @@ const AddExpense = () => {
         top: 0,
       }}
     >
+      
+      <Navigationbar/>
       <Container
         className="p-4 rounded"
         style={{ 

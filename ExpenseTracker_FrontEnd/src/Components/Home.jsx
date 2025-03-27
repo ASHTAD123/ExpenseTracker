@@ -7,10 +7,11 @@ import { Link } from "react-router";
 import deleteUserExpense from "../Services/DeleteService";
 import backgroundImage from "../assets/bg.jpg";
 import SearchExpense from "./SearchExpense";
-
+import Navigationbar from "../Components/Navbar";
 
 const Home = () => {
   
+  console.log("HOME");
   
   return (
     <div
@@ -30,7 +31,7 @@ const Home = () => {
         top: 0,
       }}
     >
-      
+          <Navigationbar/>
       <h1>HOME</h1>
     </div>
   );
