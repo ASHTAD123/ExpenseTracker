@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const API_LOGIN_USER_URL = '/login';
+const API_LOGIN_USER_URL = '/expenseTracker/login';
 
 export const loginUser = async(loginDetails)=>{
 
