@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from "react";
 import Table from "react-bootstrap/Table";
 import getExpenses from "../Services/GetExpensesService";
-import { Link } from "react-router";
+import { Link } from "react-router-dom";
 import deleteUserExpense from "../Services/DeleteService";
-import backgroundImage from "../assets/bg.jpg";
 import Form from "react-bootstrap/Form";
 import fetchResults from "../Services/SearchExpenseService";
 import Navigationbar from "../Components/Navbar";
+import bg from '../assets/bg.jpg'
 
 const SearchExpense = () => {
   
@@ -19,7 +19,6 @@ const SearchExpense = () => {
       .then((res) => {
         setExpenses(res.data);
         console.log(res.data);
-        setExpenses(res.data);
       })
       .catch((error) => {
         console.log(error);
@@ -27,7 +26,7 @@ const SearchExpense = () => {
   }, []);
 
   const handleInputChange = async (e) => {
-
+   
     let value = e.target.value;
     setQueryParam(value);
 
@@ -36,22 +35,19 @@ const SearchExpense = () => {
       const response = await fetchResults(value);
 
       if (response.status === 200) {
-        setQueryResults(response.data); // Update state with search results
-
+        setQueryResults(response.data);
         console.log(response.data);
       }
     } catch (error) {
       console.error("Error fetching results:", error);
-      setQueryResults([]); // Ensure UI is not stuck
+      setQueryResults([]); 
     }
   };
 
   return (
-
     <div
-    
-    style={{
-        backgroundImage: `url(${backgroundImage})`,
+      style={{
+      backgroundImage: `url(${bg})`,
         backgroundSize: "cover",
         backgroundPosition: "center",
         backgroundRepeat: "no-repeat",
@@ -61,103 +57,134 @@ const SearchExpense = () => {
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
-        position: "absolute", 
+        position: "absolute",
         left: 0,
         top: 0,
+        
       }}
     >
+      <Navigationbar />
+
       
-      <Navigationbar/>
       <div>
-        
-       <div className="container mt-3">
-        
-        <div className="row">
-          
-          <div className="col-md-12">
-            <div className="card">
-              <div className="fs-3 text-center">All Expenses</div>
-              <div className="card-body"></div>
-              <Form.Group className="mb-3" >
-       
-          <Form.Control
-               type="text"
-               placeholder="Search"
-               value={query}
-               onChange={handleInputChange} 
-          />
-        </Form.Group>
-        <Table responsive="sm">
-          
-          <thead>
-            <tr >
-              <th>Sr No</th>
-              <th>Date</th>
-              <th>Expense Name</th>
-              <th>Description</th>
-              <th>Amount</th>
-              <th>Action</th>
-            </tr>
-          </thead>
-          <tbody>
-            {
-            results.length > 0
-             
-            ? results.map((expenses,index) => (
-                 
-                 <tr key={expenses.expenseId}>
-                   <td>{index+1}</td>
-                    <td>{expenses.date}</td>
-                    <td>{expenses.expenseName}</td>
-                    <td>{expenses.description}</td>
-                    <td>{expenses.amount}</td>
-                    <td>
-                      <Link
-                        to={"updateExpense/" + expenses.expenseId}
-                        className="btn btn-sm btn-primary"
-                      >
-                        Edit{" "}
-                      </Link>
+        <div className="container mt-3">
+          <div className="row">
+            <div className="col-md-12">
+              <div className="">
+                <div className="fs-3 text-center"
+                ><strong>All Expenses </strong></div><br></br>
+                <div className="body"></div>
+                <Form.Group className="mb-3">
+                  <Form.Control
+                    type="text"
+                    placeholder="Search"
+                    value={query}
+                    onChange={handleInputChange}
+                  />
+                </Form.Group>
+                <Table responsive="sm">
+                  <thead>
+                    <tr>
+                      <th>Sr No</th>
+                      <th>Date</th>
+                      <th>Expense Name</th>
+                      <th>Description</th>
+                      <th>Amount</th>
+                      <th>Action</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {results.length > 0
+                      ? results.map((expense, index) => (
+                          <tr key={expense.expenseId}>
+                            <td>{index + 1}</td>
+                            <td>{expense.date}</td>
+                            <td>{expense.expenseName}</td>
+                            <td>{expense.description}</td>
+                            <td>{expense.amount}</td>
+                            <td>
+                              <Link
+                                to={"/updateExpense/" + expense.expenseId}
+                                className="btn btn-sm btn-primary"
+                              >
+                                Edit{" "}
+                              </Link>
 
-                      <button
-                        onClick={() => deleteUserExpense(expenses.expenseId)}
-                        className="btn btn-sm btn-danger ms-3"
-                      >
-                        Delete
-                      </button>
-                    </td>
-                  </tr>
-                ))
-              : expenses.map((expenses, index) => (
-                  <tr key={expenses.expenseId}>
-                    <td>{index + 1}</td>
-                    <td>{expenses.date}</td>
-                    <td>{expenses.expenseName}</td>
-                    <td>{expenses.description}</td>
-                    <td>{expenses.amount}</td>
-                    <td>
-                      <Link
-                        to={"updateExpense/" + expenses.expenseId}
-                        className="btn btn-sm btn-primary"
-                      >
-                        Edit{" "}
-                      </Link>
+                              <button
+                                onClick={async () => {
+                                  try {
+                                    await deleteUserExpense(expense.expenseId);
 
-                      <button
-                        onClick={() => deleteUserExpense(expenses.expenseId)}
-                        className="btn btn-sm btn-danger ms-3"
-                      >
-                        Delete
-                      </button>
-                    </td>
-                  </tr>
-                ))}
-          </tbody>
-        </Table>
-        </div>
+                                    setExpenses((prevExpenses) =>
+                                      prevExpenses.filter(
+                                        (item) =>
+                                          item.expenseId !== expense.expenseId
+                                      )
+                                    );
+                                    setQueryResults((prevResults) =>
+                                      prevResults.filter(
+                                        (item) =>
+                                          item.expenseId !== expense.expenseId
+                                      )
+                                    );
+                                  } catch (error) {
+                                    console.error(
+                                      "Error deleting expense:",
+                                      error
+                                    );
+                                  }
+                                }}
+                                className="btn btn-sm btn-danger ms-3"
+                              >
+                                Delete
+                              </button>
+                            </td>
+                          </tr>
+                        ))
+                      : expenses.map((expense, index) => (
+                          <tr key={expense.expenseId}>
+                            <td>{index + 1}</td>
+                            <td>{expense.date}</td>
+                            <td>{expense.expenseName}</td>
+                            <td>{expense.description}</td>
+                            <td>{expense.amount}</td>
+                            <td>
+                              <Link
+                                to={"updateExpense/" + expense.expenseId}
+                                className="btn btn-sm btn-primary"
+                              >
+                                Edit{" "}
+                              </Link>
+
+                              <button
+                                onClick={async () => {
+                                  try {
+                                    await deleteUserExpense(expense.expenseId);
+                                    setExpenses((prevExpenses) =>
+                                      prevExpenses.filter(
+                                        (item) =>
+                                          item.expenseId !== expense.expenseId
+                                      )
+                                    );
+                                  } catch (error) {
+                                    console.error(
+                                      "Error deleting expense:",
+                                      error
+                                    );
+                                  }
+                                }}
+                                className="btn btn-sm btn-danger ms-3"
+                              >  Delete
+                              </button>
+                            </td>
+                          </tr>
+                        ))}
+                  </tbody>
+                </Table>
+              </div>
+            </div>
           </div>
         </div>
-      </div>
       </div>
     </div>
   );

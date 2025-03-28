@@ -1,6 +1,5 @@
 import "./App.css";
-
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Route, Routes, Navigate, replace } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import AddExpense from "./Components/AddExpense";
 import UpdateExpense from "./Components/UpdateExpense";
@@ -11,37 +10,31 @@ import Logout from "./Components/Logout";
 import About from "./Components/About";
 import Home from "./Components/Home";
 import SearchExpense from "./Components/SearchExpense"
-
-
+import ProtectedRoute from "./Components/ProtectedRoute";
 
 function App() {
-
+  
   return (
-    
     <BrowserRouter>
-      
       <Routes>
-   
-        <Route path="/" element={<Home />  }></Route>
         
-          <Route path="/register" element={<Register />}></Route>
-        
-          <Route path="/login" element={<Login />}>
-          
-            </Route>
-        
-          <Route path="/logout" element={<Logout />}></Route>
-        
-          <Route path="/addExpense" element={<AddExpense />}></Route>
-        
-          <Route path="/search" element={<SearchExpense/>}></Route>
-        
-          <Route path="/about" element={<About/>}></Route>
-        
-          <Route path="/updateExpense/:expenseId" element={<UpdateExpense />}></Route>
-        
-          <Route path="/deleteExpense" element={<DeleteExpense />}></Route>
+        <Route path="/" element={<Home />} />
+        <Route path="/register" element={<Register />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/logout" element={<Logout />} />
 
+         {/* Protected Routes */}
+         <Route element={<ProtectedRoute />}>
+         
+          <Route path="/addExpense" element={<AddExpense />} />
+          <Route path="/search" element={<SearchExpense />} />
+          <Route  path="search/updateExpense/:expenseId" element={ <UpdateExpense />}/>
+          <Route path="/deleteExpense" element={<DeleteExpense/>}
+        />
+        </Route>
+
+        <Route path="/about" element={<About />} />
+    
       </Routes>
     </BrowserRouter>
   );

@@ -6,10 +6,10 @@ import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import Container from "react-bootstrap/Container";
 import { Nav } from "react-bootstrap";
-import backgroundImage from "../assets/bg.jpg";
+import bg from "../assets/bg.jpg";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import Navigationbar from "../Components/Navbar";
+
 const Login = () => {
 
   const [emailError, setEmailError] = useState("");
@@ -56,7 +56,6 @@ const Login = () => {
   };
 
   const handleSubmit = (event) => {
-    console.log("SUBMIT");
 
     const form = event.currentTarget;
 
@@ -67,36 +66,35 @@ const Login = () => {
     setValidated(true);
 
     try {
-      console.log("TRY");
 
       const response = loginUser(loginDetails);
 
       response
         .then((response) => {
-          console.log("then");
-          let successMsg = "Login Success 😁";
-          notifyLogin(successMsg);
-          console.log("AFTER NOTIFY CALL");
-
+    
           if (response.status === 200 || response.status === 202) {
+            let successMsg = "Login Success 😁";
             console.log("SUCCESS");
             console.log(" Status: ", response.status);
             console.log(successMsg);
+            notifyLogin(successMsg);
+            localStorage.setItem('isAuthenticated','true')
+            const isAuthenticated = localStorage.getItem("isAuthenticated");
+            console.log("isAuthenticated inside login : " +isAuthenticated);
+  
           } else {
             console.log("FAILURE");
           }
         })
         .catch((error) => {
+         
           if (error.status === 400 || error.status === 500) {
             let errLoginMsg = "Login failed ☹️ ";
             console.log(" Status: ", error.response.status);
             console.error("Login failed");
             notifyLogout(errLoginMsg);
 
-            if (
-              error.response.data ===
-              "User Already exists with this email ,pls try different email"
-            ) {
+            if (error.response.data ==="User Already exists with this email ,pls try different email") {
               console.log(error.response.data.email);
               setEmailError(error.response.data.email);
             }
@@ -112,12 +110,10 @@ const Login = () => {
     }
   };
 
-  return (
-
-    
+  return (   
     <div
       style={{
-        backgroundImage: `url(${backgroundImage})`,
+        backgroundImage: `url(${bg})`,
         backgroundSize: "cover",
         backgroundPosition: "center",
         backgroundRepeat: "no-repeat",
@@ -142,8 +138,8 @@ const Login = () => {
 
         
       >
-        <Form className="bg-white p-4 rounded">
-          <h2 className="text-center fs-3 mb-4 text-success">Login</h2>
+        <Form className="p-4 rounded">
+          <h2 className="text-center fs-3 mb-4 "><strong>Login</strong></h2>
 
           {successMsg && (
             <div className="text-center text-success">{successMsg}</div>
@@ -183,7 +179,7 @@ const Login = () => {
           {passwordError && (
             <div className="text-start text-danger">{passwordError}</div>
           )}
-
+    
           <div className="text-center mt-4">
             <div className="d-flex justify-content-center gap-3">
               <Button className="fs-6" variant="success" onClick={handleSubmit}>
@@ -193,11 +189,11 @@ const Login = () => {
               <Button className="fs-6" variant="danger" type="reset">
                 Reset
               </Button>
-            </div>
+            </div><br></br> <br></br>
             <div className="mt-3">
               <Nav.Link
                 href="register"
-                className="text-primary text-decoration-none"
+                className=""
               >
                 New User?
               </Nav.Link>

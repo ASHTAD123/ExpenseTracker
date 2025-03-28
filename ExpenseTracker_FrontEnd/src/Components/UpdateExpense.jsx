@@ -4,11 +4,13 @@ import { useEffect } from "react";
 import { useParams } from "react-router";
 import updateExpense from "../Services/UpdateExpenseService";
 import findExpense from "../Services/GetExpenseById";
-import backgroundImage from "../assets/bg.jpg";
+import bg from '../assets/bg.jpg'
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import Container from "react-bootstrap/Container";
-
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import Navigationbar from "../Components/Navbar";
 
 const UpdateExpense = () => {
  
@@ -41,7 +43,14 @@ const UpdateExpense = () => {
         console.log(error);
       });
   }, []);
-  
+  const [cleardDetails, setClearDetails] = useState({
+    expenseId: "",
+    expenseName: "",
+    amount: "",
+    date: "",
+    description: "",
+  });
+
   const handleReset = () => {
     setUpdatedExpenseDetails("")
     setSuccessMsg("");
@@ -50,6 +59,9 @@ const UpdateExpense = () => {
     setAmountError("");
     setDateError("");
     setDescriptionError("");
+
+
+    setUpdatedExpenseDetails(cleardDetails)
   };
   const handleChange = (e) => {
     handleReset();
@@ -73,13 +85,18 @@ const UpdateExpense = () => {
     console.log(updatedExpenseDetails, expenseId);
 
     try{
-      const response = updateExpense(updatedExpenseDetails, expenseId);
+     const response = updateExpense(updatedExpenseDetails, expenseId);
       
       response.then((response)=>{
        
+        
           if (response.status === 200 || response.status === 202) {
+            
             let successMsg = "Expense Updated Successfully";
-
+            
+            toast.success(successMsg, {
+              autoClose: 1000,
+            });
             console.log(" Status: ", response.status);
             setSuccessMsg(setSuccessMsg)
             console.log(successMsg);
@@ -115,7 +132,7 @@ const UpdateExpense = () => {
 
     <div
     style={{
-      backgroundImage: `url(${backgroundImage})`,
+      backgroundImage: `url(${bg})`,
       backgroundSize: "cover",
       backgroundPosition: "center",
       backgroundRepeat: "no-repeat",
@@ -130,12 +147,16 @@ const UpdateExpense = () => {
       top: 0,
     }}
   >
+
+    <ToastContainer />
+    <Navigationbar/>
+
        <Container
       className="p-4 rounded"
       style={{ 
         maxWidth: "400px",
         width: "90%",
-      }} // Ensures responsiveness
+      }} 
     >
       <Form className="bg-white p-4 rounded">
     
@@ -153,6 +174,7 @@ const UpdateExpense = () => {
             name="expenseName"
             className="form-control"
             placeholder="Expense Name"
+            value={updatedExpenseDetails.expenseName}
             onChange={(e) => handleChange(e)}
           />
         </Form.Group>
@@ -168,6 +190,7 @@ const UpdateExpense = () => {
             className="form-control"
             placeholder="Enter amount"
             onChange={(e) => handleChange(e)}
+            value={updatedExpenseDetails.amount}
           />
         </Form.Group>
         {amountError && (
@@ -180,10 +203,11 @@ const UpdateExpense = () => {
             type="date"
             id="start"
             name="date"
-            value="2018-07-22"
+            value={updateExpense.date}
             min="2018-01-01"
             max="2018-12-31"
             onChange={(e) => handleChange(e)}
+            
           />
         </Form.Group>
         {dateError && <div className="text-start text-danger">{dateError}</div>}
@@ -195,8 +219,9 @@ const UpdateExpense = () => {
           <textarea
             id="w3review"
             name="description"
+            value={updatedExpenseDetails.description}
             rows="4"
-            cols="40"
+            cols="35"
             onChange={(e) => handleChange(e)}
           ></textarea>
         </Form.Group>
@@ -208,7 +233,7 @@ const UpdateExpense = () => {
             <Button className="fs-6" variant="success" onClick={handleSubmit}>
               Update
             </Button>
-            <Button className="fs-6" variant="danger" type="reset" >
+            <Button className="fs-6" variant="danger" type="reset" onClick={handleReset} >
               Reset
             </Button>
           </div>

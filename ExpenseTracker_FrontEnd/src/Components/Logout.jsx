@@ -3,19 +3,16 @@ import { useEffect } from "react";
 import { useNavigate } from "react-router";
 
 const Logout = () => {
-  
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
-  window.localStorage.removeItem("loggedIn")
-  console.log("Logging out");
+  let isAuthenticated = localStorage.setItem("isAuthenticated", "false");
+  console.log("isAuthenticated inside logout : " +isAuthenticated);
+
 
   useEffect(() => {
-    navigate("/login")
+    navigate("/login");
+  }, []);
 
-    
-  }, [])
-  
-  
   return <div>You have been Logged out...</div>;
 };
 

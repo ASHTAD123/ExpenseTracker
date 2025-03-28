@@ -1,22 +1,17 @@
 import React from "react";
-import Table from "react-bootstrap/Table";
-import getExpenses from "../Services/GetExpensesService";
-import { useState } from "react";
-import { useEffect } from "react";
-import { Link } from "react-router";
-import deleteUserExpense from "../Services/DeleteService";
-import backgroundImage from "../assets/bg.jpg";
-import SearchExpense from "./SearchExpense";
+import bg from "../assets/bg.jpg";
 import Navigationbar from "../Components/Navbar";
 
 const Home = () => {
   
   console.log("HOME");
+  const isAuthenticated = localStorage.getItem("isAuthenticated");
+  console.log("isAuthenticated at HOME : " +isAuthenticated);
   
   return (
     <div
       style={{
-        backgroundImage: `url(${backgroundImage})`,
+        backgroundImage: `url(${bg})`,
         backgroundSize: "cover",
         backgroundPosition: "center",
         backgroundRepeat: "no-repeat",
@@ -32,6 +27,8 @@ const Home = () => {
       }}
     >
           <Navigationbar/>
+
+          
       <h1>HOME</h1>
     </div>
   );

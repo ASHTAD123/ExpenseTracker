@@ -9,6 +9,7 @@ import registerUser from "../Services/RegistrationService";
 import { useNavigate } from "react-router";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import bg from "../assets/bg.jpg";
 
 const Register = () => {
   const [errorUsername, setUsernameError] = useState("");
@@ -68,8 +69,8 @@ const Register = () => {
             });
 
             setTimeout(() => {
-              navigate("/");
-            }, 4000);
+              navigate("/login");
+            }, 2000);
             console.log(successMsg);
           }
         })
@@ -105,7 +106,7 @@ const Register = () => {
   return (
     <div
       style={{
-        backgroundImage: `url(${backgroundImage})`,
+        backgroundImage: `url(${bg})`,
         backgroundSize: "cover",
         backgroundPosition: "center",
         backgroundRepeat: "no-repeat",
@@ -126,25 +127,21 @@ const Register = () => {
       >
         <ToastContainer />
         <Form
-          className="bg-white rounded justify-content-center p-4"
+          className="rounded justify-content-center p-4"
           style={{
-            maxWidth: "600px",
-            backgroundColor: "rgba(255, 255, 255, 0.1)",
+            maxWidth: "600px"
           }}
         >
-          <h2 className="justify-content-start text-center fs-1 mb-4 text-success">
+          <h2 className="justify-content-start text-center fs-1 mb-4 ">
             Register
           </h2>
-
+          <br></br>
           {successMsg && (
-            <div className="text-center text-success fs-6 w-100">
+            <div className="text-center fs-6 w-100">
               {successMsg}
             </div>
           )}
 
-          {/* {
-        <div className="text-center text-danger fs-6 w-100">{failureMsg}</div>
-      } */}
           <Form.Group className="mb-3" controlId="username">
             <Form.Label className="fs-6 text-start d-block">
               Username
@@ -239,14 +236,14 @@ const Register = () => {
           <div className="text-center mt-5">
             <div className="d-flex justify-content-center gap-4">
               <Button
-                className="w-40 fs-5"
+                className="w-40"
                 variant="success"
                 onClick={handleSubmit}
               >
-                Register
+                Submit
               </Button>
               <Button
-                className="w-40 fs-5"
+                className="w-40"
                 variant="danger"
                 onClick={handleReset}
               >
@@ -254,10 +251,11 @@ const Register = () => {
               </Button>
             </div>
 
+<br></br>
             <div className="mt-3">
               <Nav.Link
                 href="login"
-                className="text-primary text-decoration-none"
+                className="text-black"
               >
                 Already Registered ?
               </Nav.Link>

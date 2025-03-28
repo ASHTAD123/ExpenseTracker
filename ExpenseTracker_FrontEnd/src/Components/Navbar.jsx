@@ -11,7 +11,7 @@ const Navigationbar = () => {
 
   return (
     <Navbar
-      bg="success"
+      bg="dark"
       variant="dark"
       expand="lg"
       fixed="top"
@@ -23,8 +23,6 @@ const Navigationbar = () => {
       <Navbar.Toggle aria-controls="basic-navbar-nav" />
       <Navbar.Collapse id="basic-navbar-nav">
         {
-          // Show links only if logged in
-          
             <Nav className="mr-auto">
      
               <Nav.Link as={Link} to="/addExpense" className="text-white">
@@ -43,11 +41,12 @@ const Navigationbar = () => {
       </Navbar.Collapse>
 
       <Nav>
-      <Button as={Link} to="/logout"
-       className="btn-danger text-white"
-        style={{ marginRight: '20px' }} >
+      <Nav.Link as={Link} to="/logout"
+       className="text-white"
+      
+        style={{ marginRight: '20px',background:"" }} >
         Logout
-      </Button>
+      </Nav.Link>
     </Nav>
     </Navbar>
   );
