@@ -1,6 +1,7 @@
 
 import axios from "axios";
-export const API_REGISTER_USER_URL ="expenseTracker/register";
+const API_URL = import.meta.env.VITE_API_URL;
+export const API_REGISTER_USER_URL =`${API_URL}expenseTracker/register`;
 
 export const registerUser = async (registrationDetails) => {
   try {

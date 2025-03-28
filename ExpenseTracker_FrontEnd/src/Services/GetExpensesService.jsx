@@ -1,6 +1,7 @@
 import axios from "axios";
 
-export const API_GET_EXPENSES_URL="/expenseTracker/expenses";
+const API_URL = import.meta.env.VITE_API_URL;
+export const API_GET_EXPENSES_URL=`${API_URL}/expenseTracker/expenses`;
 
 export const getExpenses = async () => {
     try {
