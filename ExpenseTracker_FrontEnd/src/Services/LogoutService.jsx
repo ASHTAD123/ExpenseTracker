@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const API_LOGOUT_USER_URL = "http://localhost:8080/expenseTracker/logout";
+const API_LOGOUT_USER_URL = "/expenseTracker/logout";
 
 export const logoutUser = async() =>{
 

@@ -1,6 +1,6 @@
 
 import axios from "axios";
-export const API_REGISTER_USER_URL ="http://localhost:8080/expenseTracker/register";
+export const API_REGISTER_USER_URL ="expenseTracker/register";
 
 export const registerUser = async (registrationDetails) => {
   try {

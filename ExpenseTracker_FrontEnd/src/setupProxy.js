@@ -6,7 +6,7 @@ module.exports = function (app) {
   app.use(
     '/expenseTracker',
     createProxyMiddleware({
-      target: 'http://localhost:8080',
+      target: 'https://your-app-name.up.railway.app',
       changeOrigin: true,
     })
   );
