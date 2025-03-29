@@ -11,6 +11,7 @@ export const findExpense = async (expenseId) => {
       console.log("URL : "+ `${API_FIND_EXPENSE_URL}`+`${expenseId}`);
       
     return await axios.get(`${API_FIND_EXPENSE_URL}`+`${expenseId}`, {
+      withCredentials: true,
       headers: {
         "Content-Type": "application/json"
       },

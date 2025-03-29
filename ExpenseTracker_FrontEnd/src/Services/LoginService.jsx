@@ -7,6 +7,7 @@ export const loginUser = async(loginDetails)=>{
 
     try{
         return await axios.post(API_LOGIN_USER_URL,loginDetails,{
+            withCredentials: true,
                "Content-Type": "application/json" // Make sure you're sending JSON
         });
     }catch(error){

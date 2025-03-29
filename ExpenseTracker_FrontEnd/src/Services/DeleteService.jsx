@@ -7,8 +7,10 @@ export const API_DELETE_EXPENSES_URL=`${API_URL}/expenseTracker/removeExpense/`;
 export const deleteExpenseService = async (expenseId) => {
     try {
     return await axios.delete(`${API_DELETE_EXPENSES_URL}`+`${expenseId}`, {
+      withCredentials: true,
       headers: {
         "Content-Type": "application/json"
+        
       },
     });
   } catch (error) {

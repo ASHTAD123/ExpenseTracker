@@ -6,7 +6,7 @@ module.exports = function (app) {
   app.use(
     '/expenseTracker',
     createProxyMiddleware({
-      target: 'https://your-app-name.up.railway.app',
+      target: 'expensetracker-production-95a6.up.railway.app',
       changeOrigin: true,
     })
   );

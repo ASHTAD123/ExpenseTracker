@@ -8,6 +8,7 @@ export const logoutUser = async() =>{
     
     try{
         return await axios.post(API_LOGOUT_USER_URL,{
+            withCredentials: true,
             headers:{
                 "Content-Type":"application/json",
             },

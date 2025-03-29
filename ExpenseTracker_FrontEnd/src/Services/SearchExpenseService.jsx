@@ -6,7 +6,9 @@ const fetchResults =debounce(async(searchTerm)=>{
      const API_SEARCH_EXPENSE_URL=`${API_URL}/expenseTracker/search/`;
 
     try {
-        return await axios.get(`${API_SEARCH_EXPENSE_URL}`+`${searchTerm}`)
+        return await axios.get(`${API_SEARCH_EXPENSE_URL}`+`${searchTerm}`,{
+            withCredentials: true,
+        })
         
     } catch (error) {
         return await Promise.reject(error);

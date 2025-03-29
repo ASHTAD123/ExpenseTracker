@@ -6,6 +6,7 @@ export const API_UPDATE_EXPENSE_URL=`${API_URL}/expenseTracker/updateExpense/`;
 export const updateExpense = async (modifiedProduct,expenseId) => {
     try {
     return await axios.post(`${API_UPDATE_EXPENSE_URL}`+`${expenseId}`, modifiedProduct,{
+      withCredentials: true,
       headers: {
         "Content-Type": "application/json"
       },

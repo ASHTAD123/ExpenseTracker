@@ -7,6 +7,7 @@ export const addExpense = async (expenseDetails) => {
     
     try {
     return await axios.post(API_ADD_EXPENSE_URL, expenseDetails, {
+      withCredentials: true,
       headers: {
         "Content-Type": "application/json",
       },

@@ -6,6 +6,7 @@ export const API_GET_EXPENSES_URL=`${API_URL}/expenseTracker/expenses`;
 export const getExpenses = async () => {
     try {
     return await axios.get(API_GET_EXPENSES_URL, {
+      withCredentials: true,
       headers: {
         "Content-Type": "application/json"
       },

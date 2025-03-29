@@ -6,10 +6,10 @@ export const API_REGISTER_USER_URL =`${API_URL}expenseTracker/register`;
 export const registerUser = async (registrationDetails) => {
   try {
     return await axios.post(API_REGISTER_USER_URL, registrationDetails, {
+      withCredentials: true,
       headers: {
         "Content-Type": "application/json",
-        withCredentials: true,// Important: Ensures cookies are sent with the request
-      },
+      }
     });
  
   } catch (error) {

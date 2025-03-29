@@ -141,7 +141,7 @@ const SearchExpense = () => {
                             </td>
                           </tr>
                         ))
-                      : expenses.map((expense, index) => (
+                      : results.map((expense, index) => (
                           <tr key={expense.expenseId}>
                             <td>{index + 1}</td>
                             <td>{expense.date}</td>
