@@ -25,7 +25,7 @@ function App() {
 
          {/* Protected Routes */}
          <Route element={<ProtectedRoute />}>
-         
+      
           <Route path="/addExpense" element={<AddExpense />} />
           <Route path="/search" element={<SearchExpense />} />
           <Route path="/search/updateExpense/:expenseId" element={ <UpdateExpense />}/>

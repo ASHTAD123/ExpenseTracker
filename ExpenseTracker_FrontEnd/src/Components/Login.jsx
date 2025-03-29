@@ -88,10 +88,10 @@ const Login = () => {
         .catch((error) => {
          
           if (error.status === 400 || error.status === 500) {
-            let errLoginMsg = "Login failed ☹️ ";
+            let errLogoutMsg = "Login failed ☹️ ";
             console.log(" Status: ", error.response.status);
             console.error("Login failed");
-            notifyLogout(errLoginMsg);
+            notifyLogout(errLogoutMsg);
 
             if (error.response.data ==="User Already exists with this email ,pls try different email") {
               console.log(error.response.data.email);

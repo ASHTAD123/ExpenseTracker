@@ -94,9 +94,12 @@ const SearchExpense = () => {
                     </tr>
                   </thead>
                   <tbody>
-                    {results.length > 0
-                      ? results.map((expense, index) => (
-                          <tr key={expense.expenseId}>
+                    {
+                    expenses.length > 0
+                    
+                    ? results.map((expense, index) => (
+                    
+                    <tr key={expense.expenseId}>
                             <td>{index + 1}</td>
                             <td>{expense.date}</td>
                             <td>{expense.expenseName}</td>

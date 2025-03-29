@@ -4,7 +4,6 @@ import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import Container from "react-bootstrap/Container";
 import { Nav } from "react-bootstrap";
-import backgroundImage from "../assets/bg.jpg";
 import registerUser from "../Services/RegistrationService";
 import { useNavigate } from "react-router";
 import { ToastContainer, toast } from "react-toastify";
@@ -20,6 +19,13 @@ const Register = () => {
   const [failureMsg, setfailureMsg] = useState("");
   const [validated, setValidated] = useState(false);
   const navigate = useNavigate();
+
+  const notifyLogin = (message) => {
+      toast.success(message, {
+        autoClose: 2000,
+        onClose: () => setTimeout(() => navigate("/login"))
+      });
+    };
 
   const [registrationDetails, setRegistrationDetails] = useState({
     username: "",
@@ -64,13 +70,7 @@ const Register = () => {
           if (response.status === 200 || response.status === 202) {
             console.log(" Status: ", response.status);
 
-            toast.success(successMsg, {
-              autoClose: 3000,
-            });
-
-            setTimeout(() => {
-              navigate("/login");
-            }, 2000);
+          notifyLogin(successMsg)
             console.log(successMsg);
           }
         })
