@@ -28,8 +28,7 @@ const Login = () => {
 
   const notifyLogout = (message) => {
     toast.success(message, {
-      autoClose: 1000,
-      onClose: () => setTimeout(() => navigate("/"), 100), // Small delay
+      autoClose: 1000
     });
   };
 
