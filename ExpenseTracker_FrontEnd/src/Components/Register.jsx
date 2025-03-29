@@ -75,7 +75,7 @@ const Register = () => {
           }
         })
         .catch((error) => {
-          if (error.response.status === 400 || error.response.status === 500) {
+          if (response.status === 400 || response.status === 500) {
             console.log(" Status: ", error.response.status);
             console.error("Registration failed :( ");
             setfailureMsg("Registration failed :(");
