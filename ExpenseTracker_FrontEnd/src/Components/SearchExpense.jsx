@@ -15,6 +15,7 @@ const SearchExpense = () => {
   const [expenses, setExpenses] = useState([]);
 
   useEffect(() => {
+  
     getExpenses()
       .then((res) => {
         setExpenses(res.data);
@@ -95,11 +96,12 @@ const SearchExpense = () => {
                   </thead>
                   <tbody>
                     {
-                    expenses.length > 0
-                    
+                    query.length > 0
+            
                     ? results.map((expense, index) => (
                     
                     <tr key={expense.expenseId}>
+                        
                             <td>{index + 1}</td>
                             <td>{expense.date}</td>
                             <td>{expense.expenseName}</td>
@@ -144,46 +146,91 @@ const SearchExpense = () => {
                             </td>
                           </tr>
                         ))
-                      : results.map((expense, index) => (
-                          <tr key={expense.expenseId}>
-                            <td>{index + 1}</td>
-                            <td>{expense.date}</td>
-                            <td>{expense.expenseName}</td>
-                            <td>{expense.description}</td>
-                            <td>{expense.amount}</td>
-                            <td>
-                              <Link
-                                to={"updateExpense/" + expense.expenseId}
-                                className="btn btn-sm btn-primary"
-                              >
-                                Edit{" "}
-                              </Link>
+                         : expenses.map((expense, index) => (
+                          
+                              <tr key={expense.expenseId}>
+                                <td>{index + 1}</td>
+                                <td>{expense.date}</td>
+                                <td>{expense.expenseName}</td>
+                                <td>{expense.description}</td>
+                                <td>{expense.amount}</td>
+                                <td>
+                                  <Link
+                                    to={"updateExpense/" + expense.expenseId}
+                                    className="btn btn-sm btn-primary"
+                                  >
+                                    Edit{" "}
+                                  </Link>
+    
+                                  <button
+                                    onClick={async () => {
+                                      try {
+                                        await deleteUserExpense(expense.expenseId);
+                                        setExpenses((prevExpenses) =>
+                                          prevExpenses.filter(
+                                            (item) =>
+                                              item.expenseId !== expense.expenseId
+                                          )
+                                        );
+                                      } catch (error) {
+                                        console.error(
+                                          "Error deleting expense:",
+                                          error
+                                        );
+                                      }
+                                    }}
+                                    className="btn btn-sm btn-danger ms-3"
+                                  >  Delete
+                                  </button>
+                                </td>
+                              </tr>
+                            
+                          ) )
+                        }        
+                      
+                </tbody>
+              </Table>
+                      {/* // : results.map((expense, index) => (
+                          
+                      //     <tr key={expense.expenseId}>
+                      //       <td>{index + 1}</td>
+                      //       <td>{expense.date}</td>
+                      //       <td>{expense.expenseName}</td>
+                      //       <td>{expense.description}</td>
+                      //       <td>{expense.amount}</td>
+                      //       <td>
+                      //         <Link
+                      //           to={"updateExpense/" + expense.expenseId}
+                      //           className="btn btn-sm btn-primary"
+                      //         >
+                      //           Edit{" "}
+                      //         </Link>
 
-                              <button
-                                onClick={async () => {
-                                  try {
-                                    await deleteUserExpense(expense.expenseId);
-                                    setExpenses((prevExpenses) =>
-                                      prevExpenses.filter(
-                                        (item) =>
-                                          item.expenseId !== expense.expenseId
-                                      )
-                                    );
-                                  } catch (error) {
-                                    console.error(
-                                      "Error deleting expense:",
-                                      error
-                                    );
-                                  }
-                                }}
-                                className="btn btn-sm btn-danger ms-3"
-                              >  Delete
-                              </button>
-                            </td>
-                          </tr>
-                        ))}
-                  </tbody>
-                </Table>
+                      //         <button
+                      //           onClick={async () => {
+                      //             try {
+                      //               await deleteUserExpense(expense.expenseId);
+                      //               setExpenses((prevExpenses) =>
+                      //                 prevExpenses.filter(
+                      //                   (item) =>
+                      //                     item.expenseId !== expense.expenseId
+                      //                 )
+                      //               );
+                      //             } catch (error) {
+                      //               console.error(
+                      //                 "Error deleting expense:",
+                      //                 error
+                      //               );
+                      //             }
+                      //           }}
+                      //           className="btn btn-sm btn-danger ms-3"
+                      //         >  Delete
+                      //         </button>
+                      //       </td>
+                      //     </tr>
+                      //   )
+                      ) */}
+                
               </div>
             </div>
           </div>
