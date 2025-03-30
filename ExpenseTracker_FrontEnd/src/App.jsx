@@ -28,7 +28,7 @@ function App() {
       
           <Route path="/addExpense" element={<AddExpense />} />
           <Route path="/search" element={<SearchExpense />} />
-          <Route path="/search/updateExpense/:expenseId" element={ <UpdateExpense />}/>
+          <Route path="/updateExpense/:expenseId" element={ <UpdateExpense />}/>
           <Route path="/deleteExpense" element={<DeleteExpense/>}
         />
         </Route>
