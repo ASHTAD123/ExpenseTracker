@@ -52,9 +52,14 @@ const SearchExpense = () => {
   const debouncedSearch = debounce(handleSearch, 500);
 
   const handleInputChange = (e) => {
-    let value = e.target.value;
-    setQueryParam(value);
-    debouncedSearch(value);
+      let value = e.target.value;
+      setQueryParam(value);
+  
+      if (value.trim() === "") {
+          setQueryResults([]); // Clear results if input is empty
+      } else {
+          debouncedSearch(value);
+      }
   };
 
   return (
