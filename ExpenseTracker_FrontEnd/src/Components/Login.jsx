@@ -22,12 +22,12 @@ const Login = () => {
   const notifyLogin = (message) => {
     toast.success(message, {
       autoClose: 2000,
-      onClose: () => setTimeout(() => navigate("/"), 100), // Small delay
+      onClose: () => setTimeout(() => navigate("/addExpense"), 100), // Small delay
     });
   };
 
-  const notifyLogout = (message) => {
-    toast.success(message, {
+  const notifyLoginError = (message) => {
+    toast.error(message, {
       autoClose: 1000
     });
   };
@@ -72,12 +72,12 @@ const Login = () => {
         .then((response) => {
     
           if (response.status === 200 || response.status === 202) {
+           
             let successMsg = "Login Success 😁";
-            console.log("SUCCESS");
-            console.log(" Status: ", response.status);
-            console.log(successMsg);
+           
             notifyLogin(successMsg);
             localStorage.setItem('isAuthenticated','true')
+           
             const isAuthenticated = localStorage.getItem("isAuthenticated");
             console.log("isAuthenticated inside login : " +isAuthenticated);
   
@@ -88,10 +88,10 @@ const Login = () => {
         .catch((error) => {
          
           if (error.status === 400 || error.status === 500) {
-            let errLogoutMsg = "Login failed ☹️ ";
-            console.log(" Status: ", error.response.status);
-            console.error("Login failed");
-            notifyLogout(errLogoutMsg);
+          
+            let errMsg = "Login failed ☹️ ";
+            console.error(errMsg+response);
+            notifyLoginError(errMsg);
 
             if (error.response.data ==="User Already exists with this email ,pls try different email") {
               console.log(error.response.data.email);
@@ -133,12 +133,12 @@ const Login = () => {
         style={{
           maxWidth: "400px",
           width: "90%",
-        }} // Ensures responsiveness
-
+        }}
         
       >
+            <ToastContainer />
         <Form className="p-4 rounded">
-          <h2 className="text-center fs-3 mb-4 "><strong>Login</strong></h2>
+          <h2 className="text-center fs-2  "><strong>Login</strong></h2>
 
           {successMsg && (
             <div className="text-center text-success">{successMsg}</div>
@@ -147,7 +147,7 @@ const Login = () => {
             <div className="text-center text-danger">{failureMsg}</div>
           )}
 
-          <Form.Group className="mb-3" controlId="email_login">
+          <Form.Group className="mb-3 mt-4" controlId="email_login">
             <Form.Label className="fs-6 text-start d-block mb-2">
               Email
             </Form.Label>
@@ -179,25 +179,26 @@ const Login = () => {
             <div className="text-start text-danger">{passwordError}</div>
           )}
     
-          <div className="text-center mt-4">
-            <div className="d-flex justify-content-center gap-3">
-              <Button className="fs-6" variant="success" onClick={handleSubmit}>
-                Login
-              </Button>
-              <ToastContainer />
-              <Button className="fs-6" variant="danger" type="reset">
-                Reset
-              </Button>
-            </div><br></br> <br></br>
-            <div className="mt-3">
-              <Nav.Link
-                href="register"
-                className=""
-              >
-                New User?
-              </Nav.Link>
-            </div>
-          </div>
+    <div className="text-center mt-5">
+  <div className="d-flex justify-content-center gap-4">
+    <Button className=" w-40" variant="success" onClick={handleSubmit}>
+       Login
+    </Button>
+
+    <Button className="w-40" variant="danger" type="reset">
+      Reset
+    </Button>
+  </div><br></br>
+
+  {/* Register Link */}
+  <div className="mt-4">
+    <span className="text-dark fw-semibold fs-6">Don't have an account ?</span><br></br>
+    <Nav.Link href="/register" className="fw-bold text-primary d-inline ms-2">
+      Sign Up
+    </Nav.Link>
+  </div>
+</div>
+
         </Form>
       </Container>
     </div>

@@ -11,6 +11,7 @@ import "react-toastify/dist/ReactToastify.css";
 import bg from "../assets/bg.jpg";
 
 const Register = () => {
+
   const [errorUsername, setUsernameError] = useState("");
   const [errorPassword, setPasswordError] = useState("");
   const [errorEmail, setEmailError] = useState("");
@@ -26,7 +27,11 @@ const Register = () => {
         onClose: () => setTimeout(() => navigate("/login"))
       });
     };
-
+  const notifyLoginError = (message) => {
+    toast.error(message, {
+      autoClose: 1000
+    });
+  };
   const [registrationDetails, setRegistrationDetails] = useState({
     username: "",
     password: "",
@@ -35,8 +40,9 @@ const Register = () => {
   });
 
   const handleChange = (e) => {
+    handleReset();
     const value = e.target.value;
-    setUsernameError("");
+    
     setRegistrationDetails((registrationDetails) => ({
       ...registrationDetails,
       [e.target.name]: value,
@@ -61,34 +67,35 @@ const Register = () => {
     setValidated(true);
 
     try {
+  
       const response = registerUser(registrationDetails);
 
       response
         .then((response) => {
-          let successMsg = "Registration Success 😁";
+        
 
           if (response.status === 200 || response.status === 202) {
+
+            let successMsg = "Registration Success 😁";
             console.log(" Status: ", response.status);
 
-          notifyLogin(successMsg)
+            notifyLogin(successMsg)
             console.log(successMsg);
           }
         })
         .catch((error) => {
+         
           if (response.status === 400 || response.status === 500) {
-            console.log(" Status: ", error.response.status);
-            console.error("Registration failed :( ");
-            setfailureMsg("Registration failed :(");
+            
+            let errMsg = "Registration failed ☹️ ";
+            console.error("Login failed");
+            notifyLoginError(errMsg);
+            console.error("Registration failed :( " +response);
 
-            if (
-              error.response.data ===
-              "User Already exists with this email ,pls try different email"
-            ) {
-              toast(
-                "User Already exists with this email ,pls try different email"
-              );
+            if (error.response.data ==="User Already exists with this email ,pls try different email") {
+              console.log(error.response.data.email);
+              setEmailError(error.response.data.email);
             }
-
             console.log(" ERROR");
             console.log(error);
 
@@ -137,9 +144,10 @@ const Register = () => {
           </h2>
           <br></br>
           {successMsg && (
-            <div className="text-center fs-6 w-100">
-              {successMsg}
-            </div>
+            <div className="text-center text-success">{successMsg}</div>
+          )}
+          {failureMsg && (
+            <div className="text-center text-danger">{failureMsg}</div>
           )}
 
           <Form.Group className="mb-3" controlId="username">
@@ -154,15 +162,11 @@ const Register = () => {
               onChange={(e) => handleChange(e)}
             />
           </Form.Group>
+        
           {errorUsername && (
-            <div
-              className="container border  fs-6"
-              style={{ maxWidth: "600px" }}
-            >
               <div className="text-center text-danger w-100">
                 {errorUsername}
               </div>
-            </div>
           )}
 
           <Form.Group className="mb-3" controlId="email">
@@ -176,13 +180,11 @@ const Register = () => {
               onChange={(e) => handleChange(e)}
             />
           </Form.Group>
+         
           {errorEmail && (
-            <div
-              className="container border fs-6 "
-              style={{ maxWidth: "600px" }}
-            >
-              <div className="text-center text-danger w-100">{errorEmail}</div>
-            </div>
+              <div className="text-center text-danger w-100">
+                {errorEmail}
+              </div>
           )}
 
           <Form.Group className="mb-3" controlId="password">
@@ -197,16 +199,12 @@ const Register = () => {
               onChange={(e) => handleChange(e)}
             />
           </Form.Group>
-
-          {errorPassword && (
-            <div
-              className="container border fs-6 "
-              style={{ maxWidth: "600px" }}
-            >
+          
+          {
+           errorPassword && (
               <div className="text-center text-danger w-100">
                 {errorPassword}
               </div>
-            </div>
           )}
 
           <Form.Group className="mb-3" controlId="fullName">
@@ -223,14 +221,9 @@ const Register = () => {
           </Form.Group>
 
           {errorFullName && (
-            <div
-              className="container border fs-6 "
-              style={{ maxWidth: "600px" }}
-            >
               <div className="text-center text-danger w-100">
                 {errorFullName}
               </div>
-            </div>
           )}
 
           <div className="text-center mt-5">
@@ -252,14 +245,16 @@ const Register = () => {
             </div>
 
 <br></br>
-            <div className="mt-3">
-              <Nav.Link
-                href="login"
-                className="text-black"
-              >
-                Already Registered ?
-              </Nav.Link>
-            </div>
+
+<div className="mt-3">
+  <Nav.Link href="/login" className="text-dark fw-semibold">
+    Already registered ? 
+  </Nav.Link>
+  <Nav.Link href="/login" className="text-primary fw-bold">
+ Log in
+  </Nav.Link>
+</div>
+
           </div>
         </Form>
       </Container>

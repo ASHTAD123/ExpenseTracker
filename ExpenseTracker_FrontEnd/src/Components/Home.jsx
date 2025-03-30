@@ -1,6 +1,7 @@
 import React from "react";
 import bg from "../assets/bg.jpg";
 import Navigationbar from "../Components/Navbar";
+import { Container, Row, Col, Card,Button } from "react-bootstrap";
 
 const Home = () => {
   
@@ -28,8 +29,11 @@ const Home = () => {
     >
           <Navigationbar/>
 
-          
-      <h1>HOME</h1>
+          <Container className="mt-5">
+
+      <Button> Get Started</Button>
+    </Container>
+
     </div>
   );
 };

@@ -40,7 +40,7 @@ const SearchExpense = () => {
         const response = await fetchResults(query);
         
         console.log("Full response data:", response.data);
-        console.log("Array length:", response.data.length);
+        console.log("Array length:", response.length);
         
         if (response.status === 200) {
           console.log("Search results:", response.data);
