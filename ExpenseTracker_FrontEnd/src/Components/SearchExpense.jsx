@@ -57,10 +57,19 @@ const SearchExpense = () => {
     return () => clearTimeout(delayDebounce);
   }, [query]);
 
+  // const handleInputChange = (e) => {
+  //   setQueryParam(e.target.value);
+  // };
   const handleInputChange = (e) => {
-    setQueryParam(e.target.value);
+    let value = e.target.value;
+    setQueryParam(value);
+  
+    if (value.trim() === "") {
+      setQueryResults([]); // Clear results if input is empty
+    } else {
+      debouncedFetchResults(value).then(setQueryResults);
+    }
   };
-
   return (
     <div
       style={{
