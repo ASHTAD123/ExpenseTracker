@@ -1,12 +1,12 @@
 import React from "react";
 import { useState } from "react";
+import { Nav } from "react-bootstrap";
+import { useNavigate } from "react-router";
+import { ToastContainer, toast } from "react-toastify";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import Container from "react-bootstrap/Container";
-import { Nav } from "react-bootstrap";
 import registerUser from "../Services/RegistrationService";
-import { useNavigate } from "react-router";
-import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import bg from "../assets/bg.jpg";
 
@@ -21,7 +21,7 @@ const Register = () => {
   const [validated, setValidated] = useState(false);
   const navigate = useNavigate();
 
-  const notifyLogin = (message) => {
+  const notifyRegister = (message) => {
       toast.success(message, {
         autoClose: 2000,
         onClose: () => setTimeout(() => navigate("/login"))
@@ -73,22 +73,23 @@ const Register = () => {
       response
         .then((response) => {
         
-
           if (response.status === 200 || response.status === 202) {
 
             let successMsg = "Registration Success 😁";
-            console.log(" Status: ", response.status);
 
-            notifyLogin(successMsg)
-            console.log(successMsg);
+            notifyRegister(successMsg)
+            console.log(successMsg +response);
+          } 
+          else {
+            console.log("FAILURE");
           }
         })
         .catch((error) => {
          
-          if (response.status === 400 || response.status === 500) {
+          if (error.status === 400 || error.status === 500) {
             
             let errMsg = "Registration failed ☹️ ";
-            console.error("Login failed");
+            console.error("Registration failed");
             notifyLoginError(errMsg);
             console.error("Registration failed :( " +response);
 

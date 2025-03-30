@@ -18,7 +18,7 @@ function App() {
     <BrowserRouter>
       <Routes>
         
-        <Route path="/" element={<AddExpense />} />
+        <Route path="/" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login />} />
         <Route path="/logout" element={<Logout />} />
