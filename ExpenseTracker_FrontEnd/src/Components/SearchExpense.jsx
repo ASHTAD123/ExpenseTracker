@@ -7,6 +7,7 @@ import Form from "react-bootstrap/Form";
 import fetchResults from "../Services/SearchExpenseService";
 import Navigationbar from "../Components/Navbar";
 import bg from "../assets/bg.jpg";
+import { debouncedFetchResults } from "../Services/SearchExpenseService";
 
 const SearchExpense = () => {
   const [query, setQueryParam] = useState("");
