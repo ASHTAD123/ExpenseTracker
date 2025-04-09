@@ -1,14 +1,10 @@
-import React from "react";
-import { useState } from "react";
+import { React, useState  } from "react";
 import addExpense from "../Services/ExpenseService";
-import backgroundImage from "../assets/bg.jpg";
-import Form from "react-bootstrap/Form";
-import Button from "react-bootstrap/Button";
-import Container from "react-bootstrap/Container";
 import Navigationbar from "../Components/Navbar";
 import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 import bg from '../assets/bg.jpg'
+import "bootstrap/dist/css/bootstrap.min.css";
+import { Dropdown,Form,Button,Container,InputGroup,ListGroup } from "react-bootstrap";
 
 const AddExpense = () => {
 
@@ -23,12 +19,38 @@ const AddExpense = () => {
   const [failureMsg, setFailureMsg] = useState("");
   const [validated, setValidated] = useState(false);
 
+  const predifinedOptions = ["Food","Travel","Business","Personal","Outdoor","Miscellenous"];
+   
+  const [list, setList] = useState(predifinedOptions);
+   const [value, setValue] = useState();
+   const [customValue, setCustomValue] = useState("");
+ 
+   const handleSelect = (selectedValue) => {
+    setValue(selectedValue);
+    setExpenseDetails((prevDetails) => ({
+      ...prevDetails,
+      expenseType: selectedValue,
+    }));
+  };
+  
+ 
+   const handleCustomAdd = () => {
+    if (customValue.trim() !== "") {
+      setList((prevList) => [...prevList, customValue]);
+      setValue(customValue);
+      setCustomValue(""); // Clear input
+    }
+  };
+  
+  
+
   const [expenseDetails, setExpenseDetails] = useState({
     expenseName: "",
     amount: "",
     date: "",
     description: "",
   });
+
 
   const handleChange = (e) => {
     handleReset();
@@ -129,6 +151,42 @@ const AddExpense = () => {
       >
         <ToastContainer />
 
+  <div className="container mt-4">
+  <Dropdown onSelect={handleSelect}>
+  <Dropdown.Toggle variant="primary">
+    {value ? value : "Select an Option"}
+  </Dropdown.Toggle>
+
+  <Dropdown.Menu>
+    {list.map((option, index) => (
+      <Dropdown.Item key={index} eventKey={option} onClick={() => handleSelect(option)}>
+        {option}
+      </Dropdown.Item>
+    ))}
+  </Dropdown.Menu>
+</Dropdown>
+
+ 
+       <InputGroup className="mt-3">
+         <Form.Control
+           type="text"
+           placeholder="Enter your own expense type"
+           value={customValue}
+           onChange={(e) => setCustomValue(e.target.value)}
+         />
+         <Button variant="success" onClick={handleCustomAdd}>
+           Add
+         </Button>
+       </InputGroup>
+ 
+       <ListGroup className="mt-3">
+         {list.map((item, index) => (
+           <ListGroup.Item key={index}>{item}</ListGroup.Item>
+         ))}
+       </ListGroup>
+     </div>
+
+
         <Form className=" p-5 rounded">
           <h2 className="text-center fs-3 mb-4 "><strong> Add Expense</strong></h2>
 <br />
@@ -138,7 +196,8 @@ const AddExpense = () => {
           {failureMsg && (
             <div className="text-center text-danger">{failureMsg}</div>
           )}
-
+   
+    
           <Form.Group className="mb-3">
             <Form.Label className="fs-6 text-start d-block mb-2">
               Expense Name

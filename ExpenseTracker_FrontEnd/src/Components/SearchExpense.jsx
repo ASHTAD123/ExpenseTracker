@@ -10,12 +10,15 @@ import bg from "../assets/bg.jpg";
 import { debouncedFetchResults } from "../Services/SearchExpenseService";
 
 const SearchExpense = () => {
+
   const [query, setQueryParam] = useState("");
   const [results, setQueryResults] = useState([]);
   const [expenses, setExpenses] = useState([]);
   const latestSearchRef = useRef(0); // Track the latest search request
 
+  //Getting Expenses
   useEffect(() => {
+  
     getExpenses()
       .then((res) => {
         setExpenses(res.data);
@@ -26,8 +29,8 @@ const SearchExpense = () => {
   }, []);
 
   useEffect(() => {
-    if (query.trim() === "") {
-      setQueryResults([]); // Clear results if input is empty
+    if (query.trim() === " ") {
+      setQueryResults([]);
       return;
     }
 
@@ -35,6 +38,7 @@ const SearchExpense = () => {
     latestSearchRef.current = searchId; // Save the latest search ID
 
     const delayDebounce = setTimeout(async () => {
+    
       try {
         console.log("Searching for:", query);
         const response = await fetchResults(query);
@@ -58,14 +62,13 @@ const SearchExpense = () => {
     return () => clearTimeout(delayDebounce);
   }, [query]);
 
-  // const handleInputChange = (e) => {
-  //   setQueryParam(e.target.value);
-  // };
+
   const handleInputChange = (e) => {
+    
     let value = e.target.value;
     setQueryParam(value);
   
-    if (value.trim() === "") {
+    if (value.trim() === " ") {
       setQueryResults([]); // Clear results if input is empty
     } else {
       debouncedFetchResults(value).then(setQueryResults);

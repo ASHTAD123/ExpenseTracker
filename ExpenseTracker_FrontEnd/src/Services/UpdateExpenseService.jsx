@@ -1,7 +1,8 @@
 import axios from "axios";
 
 const API_URL = import.meta.env.VITE_API_URL;
-export const API_UPDATE_EXPENSE_URL=`${API_URL}/expenseTracker/updateExpense/`;
+// export const API_UPDATE_EXPENSE_URL=`${API_URL}/expenseTracker/updateExpense/`;
+const API_UPDATE_EXPENSE_URL = import.meta.env.MODE === "production" ? import.meta.env.VITE_API_URL :"http://localhost:8080/expenseTracker/updateExpense/";
 
 export const updateExpense = async (modifiedProduct,expenseId) => {
     try {
