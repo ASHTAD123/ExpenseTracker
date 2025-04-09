@@ -14,7 +14,7 @@ import ProtectedRoute from "./Components/ProtectedRoute";
 function App() {
   
   return (
-    <BrowserRouter basename="/expenseTracker">
+    <BrowserRouter>
       <Routes>
         
         <Route path="/" element={<Login />} />

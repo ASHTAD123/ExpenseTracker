@@ -5,7 +5,7 @@ const API_URL = import.meta.env.VITE_API_URL;
 
 // export const API_REGISTER_USER_URL = `${API_URL}/expenseTracker/register`;
 
-const API_REGISTER_USER_URL = import.meta.env.PROD ? `${import.meta.env.VITE_API_URL}/expenseTracker/register` :"http://localhost:8080/expenseTracker/register";
+const API_REGISTER_USER_URL = import.meta.env.PROD ? `${import.meta.env.VITE_API_URL}/register` :"http://localhost:8080/register";
 
 export const registerUser = async (registrationDetails) => {
   try {
