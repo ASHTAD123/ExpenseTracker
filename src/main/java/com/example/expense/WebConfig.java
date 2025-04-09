@@ -10,7 +10,7 @@ public class WebConfig implements WebMvcConfigurer {
     @Override
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**")
-        		.allowedOrigins("https://expensetracker-gxy7.onrender.com") 
+        		.allowedOrigins("symphonious-otter-07cb0e.netlify.app") 
                 .allowedMethods("GET", "POST", "PUT", "DELETE")
                 .allowCredentials(true)
                 .allowedHeaders("Authorization", "Content-Type")
