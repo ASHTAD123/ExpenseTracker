@@ -2,7 +2,7 @@ import axios from "axios";
 
 // const API_URL = import.meta.env.VITE_API_URL;
 // const API_LOGOUT_USER_URL = `${API_URL}/expenseTracker/logout`;
-const API_LOGOUT_USER_URL = import.meta.env.PROD ? `${import.meta.env.VITE_API_URL}/logout` :"http://localhost:8080/expenseTracker/logout";
+const API_LOGOUT_USER_URL = import.meta.env.PROD ? `${import.meta.env.VITE_API_URL}/expenseTracker/logout` :"http://localhost:8080/expenseTracker/logout";
 
 export const logoutUser = async() =>{
 

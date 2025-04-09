@@ -22,7 +22,7 @@ import debounce from "lodash.debounce";
 const API_URL = import.meta.env.VITE_API_URL;
 // const API_SEARCH_EXPENSE_URL = `${API_URL}/expenseTracker/search`;
 
-const API_SEARCH_EXPENSE_URL = import.meta.env.PROD ? `${import.meta.env.VITE_API_URL}/search` :"http://localhost:8080/expenseTracker/search";
+const API_SEARCH_EXPENSE_URL = import.meta.env.PROD ? `${import.meta.env.VITE_API_URL}/expenseTracker/search` :"http://localhost:8080/expenseTracker/search";
 
 const fetchResults = async (searchTerm) => {
   
