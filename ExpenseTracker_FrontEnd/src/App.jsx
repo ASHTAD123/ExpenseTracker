@@ -19,17 +19,17 @@ function App() {
       <Routes>
         
         <Route path="/" element={<Login />} />
-        <Route path="/expenseTracker/register" element={<Register />} />
-        <Route path="/expenseTracker/login" element={<Login />} />
-        <Route path="/expenseTracker/logout" element={<Logout />} />
+        <Route path="/register" element={<Register />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/logout" element={<Logout />} />
 
          {/* Protected Routes */}
          <Route element={<ProtectedRoute />}>
       
-          <Route path="/expenseTracker/addExpense" element={<AddExpense />} />
-          <Route path="/expenseTracker/search" element={<SearchExpense />} />
-          <Route path="/expenseTracker/updateExpense/:expenseId" element={ <UpdateExpense />}/>
-          <Route path="/expenseTracker/deleteExpense" element={<DeleteExpense/>}
+          <Route path="/addExpense" element={<AddExpense />} />
+          <Route path="/search" element={<SearchExpense />} />
+          <Route path="/updateExpense/:expenseId" element={ <UpdateExpense />}/>
+          <Route path="/deleteExpense" element={<DeleteExpense/>}
         />
         </Route>
 
