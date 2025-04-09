@@ -2,7 +2,7 @@ import axios from "axios";
 
 const API_URL = import.meta.env.VITE_API_URL;
 
-const API_FIND_EXPENSE_URL = import.meta.env.PROD ? `${import.meta.env.VITE_API_URL}` :"http://localhost:8080/";
+const API_FIND_EXPENSE_URL = import.meta.env.PROD ? `${import.meta.env.VITE_API_URL}/expenseTracker` :"http://localhost:8080/expenseTracker/";
 // export const API_FIND_EXPENSE_URL=`${API_URL}/expenseTracker/`;
 
 export const findExpense = async (expenseId) => {
