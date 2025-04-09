@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const API_ADD_EXPENSE_URL  = import.meta.env.PROD ? `${import.meta.env.VITE_API_URL}/expenseTracker/addExpense/`: "http://localhost:8080/expenseTracker/addExpense"; 
+const API_ADD_EXPENSE_URL  = import.meta.env.PROD ? `${import.meta.env.VITE_API_URL}/expenseTracker/addExpense`: "http://localhost:8080/expenseTracker/addExpense"; 
 
 // export const API_ADD_EXPENSE_URL=`${API_URL}/expenseTracker/addExpense`;
 
