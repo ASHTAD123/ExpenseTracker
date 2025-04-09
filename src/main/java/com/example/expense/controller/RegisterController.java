@@ -17,7 +17,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 
 @RestController
-@RequestMapping("/expenseTracker")
+//@RequestMapping("/expenseTracker")
 @CrossOrigin(origins="https://symphonious-otter-07cb0e.netlify.app")
 public class RegisterController {
 
