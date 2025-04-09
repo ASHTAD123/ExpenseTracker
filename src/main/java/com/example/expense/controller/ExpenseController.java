@@ -34,8 +34,8 @@ public class ExpenseController {
 	private CookieService cookieService;
 	
 	@GetMapping("/home")
-	public void home(HttpSession session, HttpServletRequest request, HttpServletResponse response) {
-	
+	public String  home(HttpSession session, HttpServletRequest request, HttpServletResponse response) {
+		 return "Hello from Railway!";
 	}
 	
 	@GetMapping("/search/{expenseName}")
