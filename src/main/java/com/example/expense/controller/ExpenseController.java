@@ -35,6 +35,7 @@ public class ExpenseController {
 	
 	@GetMapping("/home")
 	public void home(HttpSession session, HttpServletRequest request, HttpServletResponse response) {
+	
 	}
 	
 	@GetMapping("/search/{expenseName}")
