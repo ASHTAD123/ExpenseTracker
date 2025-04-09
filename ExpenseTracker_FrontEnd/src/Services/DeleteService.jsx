@@ -4,7 +4,8 @@ import axios from "axios";
 
 // export const API_DELETE_EXPENSES_URL=`${API_URL}/expenseTracker/removeExpense/`;
 
-const API_DELETE_EXPENSES_URL = import.meta.env.PROD ? `${import.meta.env.VITE_API_URL}/removeExpense`: "http://localhost:8080/expenseTracker/removeExpense/";
+const API_DELETE_EXPENSES_URL = import.meta.env.PROD 
+? `${import.meta.env.VITE_API_URL}/removeExpense`: "http://localhost:8080/expenseTracker/removeExpense/";
 
 
 export const deleteExpenseService = async (expenseId) => {
