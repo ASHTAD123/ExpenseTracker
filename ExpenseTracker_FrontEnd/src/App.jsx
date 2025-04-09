@@ -8,14 +8,13 @@ import Register from "./Components/Register";
 import Login from "./Components/Login";
 import Logout from "./Components/Logout";
 import About from "./Components/About";
-import Home from "./Components/Home";
 import SearchExpense from "./Components/SearchExpense"
 import ProtectedRoute from "./Components/ProtectedRoute";
 
 function App() {
   
   return (
-    <BrowserRouter>
+    <BrowserRouter basename="/expenseTracker">
       <Routes>
         
         <Route path="/" element={<Login />} />
