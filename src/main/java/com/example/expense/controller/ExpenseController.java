@@ -58,6 +58,7 @@ public class ExpenseController {
 	
 	@GetMapping("/expenses")
 	public List<Optional<ExpenseEntity>> getExpense(HttpServletRequest request, HttpServletResponse response) {
+		
 		return expenseService.getExpense(request, response);
 	}
 

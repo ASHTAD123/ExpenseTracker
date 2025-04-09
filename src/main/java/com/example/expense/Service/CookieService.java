@@ -8,15 +8,15 @@ import jakarta.servlet.http.HttpServletRequest;
 public class CookieService {
 
 	public String getCookie(HttpServletRequest request) {
-
-		Cookie[] cookies = request.getCookies();
-		String value="";
-		
-		if (cookies != null) {
-			for (Cookie cookie : cookies) {
-				 value = cookie.getValue();
-			}
-		}
-		return value;
+	    Cookie[] cookies = request.getCookies();
+	    
+	    if (cookies != null) {
+	        for (Cookie cookie : cookies) {
+	            if ("loggedUser".equals(cookie.getName())) {
+	                return cookie.getValue();
+	            }
+	        }
+	    }
+	    return null; // or empty string if you prefer
 	}
 }
